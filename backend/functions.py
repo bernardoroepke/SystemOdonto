@@ -237,8 +237,6 @@ def monta_sql_delete_tabela_unica_2_parametros(args, tabela):
                 sql += f"{chave} = {valor}"
                 break
 
-        print(sql)
-
         cursor = conexao.cursor()
         cursor.execute(sql)
         conexao.commit()
