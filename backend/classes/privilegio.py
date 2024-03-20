@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
 class Privilegio(Resource):
 

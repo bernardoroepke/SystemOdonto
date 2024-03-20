@@ -1,21 +1,18 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
-class Material(Resource):
+class Agenda(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_material', type=int, required=False)
-        parser.add_argument('nome', type=str, required=False)
-        parser.add_argument('codigo', type=str, required=False)
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('validade', type=str, required=False)
+        parser.add_argument('cod_agenda', type=int, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'materiais')
+        response = functions.monta_sql_select_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -25,12 +22,8 @@ class Material(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_material': item[0],
-                'cod_situacao': item[1],
-                'nome': item[2],
-                'codigo': item[3],
-                'tipo': item[4],
-                'validade': item[5]
+                'cod_agenda': item[0],
+                'cod_atendimento': item[1],
             })
 
         return {
@@ -43,13 +36,10 @@ class Material(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('nome', type=str, required=True, help="Campo 'nome' é obrigatório.")
-        parser.add_argument('codigo', type=str, required=False)
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('validade', type=str, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'materiais')
+        response = functions.monta_sql_insert_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -62,14 +52,11 @@ class Material(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_material', type=int, required=True, help="Campo 'cod_material' é obrigatório.")
-        parser.add_argument('nome', type=str, required=False)
-        parser.add_argument('codigo', type=str, required=False)
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('validade', type=str, required=False)
+        parser.add_argument('cod_agenda', type=int, required=True, help="Campo 'cod_agenda' é obrigatório.")
+        parser.add_argument('cod_atendimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'materiais')
+        response = functions.monta_sql_update_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -82,10 +69,10 @@ class Material(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_material', type=int, required=True, help="Campo 'cod_material' é obrigatório.")
+        parser.add_argument('cod_agenda', type=int, required=True, help="Campo 'cod_agenda' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'materiais')
+        response = functions.monta_sql_delete_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

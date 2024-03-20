@@ -1,16 +1,5 @@
 from flask_restful import Resource, reqparse
-import functions
-import mysql.connector
-import os
-
-#Dados de conexão com banco de dados
-db_host = os.environ.get('DBHOST')
-db_user = os.environ.get('DBUSER')
-db_password = os.environ.get('DBPASSWORD')
-db_database = os.environ.get('DBDATABASE')
-
-from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
 class Usuario(Resource):
 

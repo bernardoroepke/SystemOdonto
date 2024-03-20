@@ -1,24 +1,22 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
-class Equipamento(Resource):
+class Cliente(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_equipamento', type=int, required=False)
-        parser.add_argument('cod_situacao', type=int, required=False)
+        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_usuario', type=int, required=False)
+        parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('marca', type=str, required=False)
-        parser.add_argument('modelo', type=str, required=False)
-        parser.add_argument('serial', type=str, required=False)
-        parser.add_argument('garantia', type=str, required=False)
+        parser.add_argument('data_nascimento', type=str, required=False)
+        parser.add_argument('cpf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'equipamentos')
+        response = functions.monta_sql_select_tabela_unica(args, 'clientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -28,14 +26,12 @@ class Equipamento(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_equipamento': item[0],
-                'cod_situacao': item[1],
-                'nome': item[2],
-                'tipo': item[3],
-                'marca': item[4],
-                'modelo': item[5],
-                'serial': item[6],
-                'garantia': item[7]
+                'cod_cliente': item[0],
+                'cod_usuario': item[1],
+                'cod_plano_saude': item[2],
+                'nome': item[3],
+                'data_nascimento': item[4],
+                'cpf': item[5],
             })
 
         return {
@@ -48,16 +44,23 @@ class Equipamento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_situacao', type=int, required=False)
+        parser.add_argument('cod_usuario', type=int, required=False)
+        parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('nome', type=str, required=True, help="Campo 'nome' é obrigatório.")
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('marca', type=str, required=False)
-        parser.add_argument('modelo', type=str, required=False)
-        parser.add_argument('serial', type=str, required=False)
-        parser.add_argument('garantia', type=str, required=False)
+        parser.add_argument('data_nascimento', type=str, required=True, help="Campo 'data_nascimento' é obrigatório.")
+        parser.add_argument('cpf', type=str, required=True, help="Campo 'cpf' é obrigatório.")
         args = parser.parse_args()
+        
+        login = functions.gerar_login(args)
+        falha = functions.verifica_falha_requisicao(login)
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'equipamentos')
+        if falha is not None:
+            return falha, 500
+        
+        #Adicionando cod_usuario dentro de argumentos para cadastrar cliente
+        args['cod_usuario'] = login['cod_usuario']
+
+        response = functions.monta_sql_insert_tabela_unica(args, 'clientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -70,17 +73,14 @@ class Equipamento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_equipamento', type=int, required=True, help="Campo 'cod_equipamento' é obrigatório.")
-        parser.add_argument('cod_situacao', type=int, required=False)
+        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
+        parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
-        parser.add_argument('tipo', type=str, required=False)
-        parser.add_argument('marca', type=str, required=False)
-        parser.add_argument('modelo', type=str, required=False)
-        parser.add_argument('serial', type=str, required=False)
-        parser.add_argument('garantia', type=str, required=False)
+        parser.add_argument('data_nascimento', type=str, required=False)
+        parser.add_argument('cpf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'equipamentos')
+        response = functions.monta_sql_update_tabela_unica(args, 'clientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -93,10 +93,10 @@ class Equipamento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_equipamento', type=int, required=True, help="Campo 'cod_equipamento' é obrigatório.")
+        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'equipamentos')
+        response = functions.monta_sql_delete_tabela_unica(args, 'clientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -105,7 +105,7 @@ class Equipamento(Resource):
         return response, 201
     
 
-class EquipamentoSituacao(Resource):
+class ClienteSituacao(Resource):
 
     #Tratativa de requisição GET
     def get(self):
@@ -116,7 +116,7 @@ class EquipamentoSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'equipamentos_situacoes')
+        response = functions.monta_sql_select_tabela_unica(args, 'clientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -143,7 +143,7 @@ class EquipamentoSituacao(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'equipamentos_situacoes')
+        response = functions.monta_sql_insert_tabela_unica(args, 'clientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -160,7 +160,7 @@ class EquipamentoSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'equipamentos_situacoes')
+        response = functions.monta_sql_update_tabela_unica(args, 'clientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -176,7 +176,7 @@ class EquipamentoSituacao(Resource):
         parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'equipamentos_situacoes')
+        response = functions.monta_sql_delete_tabela_unica(args, 'clientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

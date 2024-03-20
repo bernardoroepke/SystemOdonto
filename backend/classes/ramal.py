@@ -1,19 +1,19 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
-class Estoque(Resource):
+class Ramal(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_estoque', type=int, required=False)
-        parser.add_argument('cod_material', type=int, required=False)
-        parser.add_argument('quantidade', type=int, required=False)
+        parser.add_argument('cod_ramal', type=int, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'estoques')
+        response = functions.monta_sql_select_tabela_unica(args, 'ramais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -23,9 +23,9 @@ class Estoque(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_estoque': item[0],
-                'cod_material': item[1],
-                'quantidade': item[2],
+                'cod_ramal': item[0],
+                'cod_funcionario': item[1],
+                'descricao': item[2],
             })
 
         return {
@@ -38,11 +38,11 @@ class Estoque(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_material', type=str, required=True, help="Campo 'cod_material' é obrigatório.")
-        parser.add_argument('quantidade', type=int, required=True, help="Campo 'quantidade' é obrigatório.")
+        parser.add_argument('cod_funcionario', type=int, required=False)
+        parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'estoques')
+        response = functions.monta_sql_insert_tabela_unica(args, 'ramais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -55,12 +55,12 @@ class Estoque(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_estoque', type=int, required=True, help="Campo 'cod_estoque' é obrigatório.")
-        parser.add_argument('cod_material', type=int, required=False)
-        parser.add_argument('quantidade', type=str, required=False)
+        parser.add_argument('cod_ramal', type=int, required=True, help="Campo 'cod_ramal' é obrigatório.")
+        parser.add_argument('cod_funcionario', type=int, required=False)
+        parser.add_argument('descricao', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'estoques')
+        response = functions.monta_sql_update_tabela_unica(args, 'ramais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -73,10 +73,10 @@ class Estoque(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_estoque', type=int, required=True, help="Campo 'cod_estoque' é obrigatório.")
+        parser.add_argument('cod_ramal', type=int, required=True, help="Campo 'cod_ramal' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'estoques')
+        response = functions.monta_sql_delete_tabela_unica(args, 'ramais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

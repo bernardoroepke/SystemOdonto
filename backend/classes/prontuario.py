@@ -1,21 +1,21 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
-class Atendimento(Resource):
+class Prontuario(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('cod_prontuario', type=int, required=False)
         parser.add_argument('cod_cliente', type=int, required=False)
-        parser.add_argument('cod_funcionario', type=int, required=False)
-        parser.add_argument('cod_situacao', type=int, required=False)
-        parser.add_argument('observacao', type=str, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('anamnese', type=str, required=False)
+        parser.add_argument('plano_terapeutico', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'atendimentos')
+        response = functions.monta_sql_select_tabela_unica(args, 'prontuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -25,11 +25,11 @@ class Atendimento(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_atendimento': item[0],
+                'cod_prontuario': item[0],
                 'cod_cliente': item[1],
-                'cod_funcionario': item[2],
-                'cod_situacao': item[3],
-                'observacao': item[4]
+                'cod_atendimento': item[2],
+                'anamnese': item[3],
+                'plano_terapeutico': item[4],
             })
 
         return {
@@ -43,12 +43,12 @@ class Atendimento(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
-        parser.add_argument('cod_funcionario', type=int, required=True, help="Campo 'cod_funcionario' é obrigatório.")
-        parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
-        parser.add_argument('observacao', type=str, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
+        parser.add_argument('anamnese', type=str, required=False)
+        parser.add_argument('plano_terapeutico', type=str, required=False)
         args = parser.parse_args()
-        
-        response = functions.monta_sql_insert_tabela_unica(args, 'atendimentos')
+
+        response = functions.monta_sql_insert_tabela_unica(args, 'prontuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -61,14 +61,14 @@ class Atendimento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
+        parser.add_argument('cod_prontuario', type=int, required=True, help="Campo 'cod_prontuario' é obrigatório.")
         parser.add_argument('cod_cliente', type=int, required=False)
-        parser.add_argument('cod_funcionario', type=int, required=False)
-        parser.add_argument('cod_situacao', type=int, required=False)
-        parser.add_argument('observacao', type=str, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('anamnese', type=str, required=False)
+        parser.add_argument('plano_terapeutico', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'atendimentos')
+        response = functions.monta_sql_update_tabela_unica(args, 'prontuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -81,10 +81,10 @@ class Atendimento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
+        parser.add_argument('cod_prontuario', type=int, required=True, help="Campo 'cod_prontuario' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'atendimentos')
+        response = functions.monta_sql_delete_tabela_unica(args, 'prontuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -93,18 +93,18 @@ class Atendimento(Resource):
         return response, 201
     
 
-class AtendimentoSituacao(Resource):
+class ProntuarioProcedimento(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_situacao', type=int, required=False)
-        parser.add_argument('descricao', type=str, required=False)
+        parser.add_argument('cod_prontuario', type=int, required=False)
+        parser.add_argument('cod_procedimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'atendimentos_situacoes')
+        response = functions.monta_sql_select_tabela_unica(args, 'prontuarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -114,8 +114,8 @@ class AtendimentoSituacao(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_situacao': item[0],
-                'descricao': item[1],
+                'cod_prontuario': item[0],
+                'cod_procedimento': item[1],
             })
 
         return {
@@ -128,10 +128,11 @@ class AtendimentoSituacao(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
+        parser.add_argument('cod_prontuario', type=int, required=True, help="Campo 'cod_prontuario' é obrigatório.")
+        parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'atendimentos_situacoes')
+        response = functions.monta_sql_insert_tabela_unica(args, 'prontuarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -141,30 +142,21 @@ class AtendimentoSituacao(Resource):
 
     #Tratativa de requisição PUT
     def put(self):
-
-        #Adicionando possíveis argumentos para a requisição
-        parser = reqparse.RequestParser()
-        parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
-        parser.add_argument('descricao', type=str, required=False)
-        args = parser.parse_args()
-
-        response = functions.monta_sql_update_tabela_unica(args, 'atendimentos_situacoes')
-        falha = functions.verifica_falha_requisicao(response)
-
-        if falha is not None:
-            return falha, 500
-
-        return response, 201
+        return {
+            'status': 0,
+            'msg': 'Método PUT não aceito.'
+        }
     
     #Tratativa de requisição DELETE
     def delete(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
+        parser.add_argument('cod_prontuario', type=int, required=True, help="Campo 'cod_prontuario' é obrigatório.")
+        parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'atendimentos_situacoes')
+        response = functions.monta_sql_delete_tabela_unica_2_parametros(args, 'prontuarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

@@ -1,25 +1,25 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_restful import Api
-from usuario import *
-from privilegio import *
-from cliente import *
-from funcionario import *
-from endereco import *
-from fornecedor import *
-from atendimento import *
-from cargo import *
-from especialidade import *
-from plano_saude import *
-from agenda import *
-from ramal import *
-from prontuario import *
-from procedimento import *
-from equipamento import *
-from estoque import *
-from material import *
-from ordem_servico import *
-from configuracao_sistema import *
+from backend.classes.usuario import *
+from backend.classes.privilegio import *
+from backend.classes.cliente import *
+from backend.classes.funcionario import *
+from backend.classes.endereco import *
+from backend.classes.fornecedor import *
+from backend.classes.atendimento import *
+from backend.classes.cargo import *
+from backend.classes.especialidade import *
+from backend.classes.plano_saude import *
+from backend.classes.agenda import *
+from backend.classes.ramal import *
+from backend.classes.prontuario import *
+from backend.classes.procedimento import *
+from backend.classes.equipamento import *
+from backend.classes.estoque import *
+from backend.classes.material import *
+from backend.classes.ordem_servico import *
+from backend.classes.configuracao_sistema import *
 
 app = Flask(__name__)
 api = Api(app)
@@ -54,4 +54,5 @@ api.add_resource(OrdemServico, '/ordemservico')
 api.add_resource(OrdemServicoSituacao, '/ordemservico/situacao')
 api.add_resource(ConfiguracaoSistema, '/configuracaosistema')
 
-app.run(host='0.0.0.0', debug=True)
+if  __name__ == '__main__':
+    app.run(debug=True)

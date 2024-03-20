@@ -1,18 +1,18 @@
 from flask_restful import Resource, reqparse
-import functions
+import backend.functions as functions
 
-class Cargo(Resource):
+class PlanoSaude(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cargo', type=int, required=False)
+        parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'cargos')
+        response = functions.monta_sql_select_tabela_unica(args, 'planos_saude')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -22,7 +22,7 @@ class Cargo(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_cargo': item[0],
+                'cod_plano_saude': item[0],
                 'descricao': item[1],
             })
 
@@ -39,7 +39,7 @@ class Cargo(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'cargos')
+        response = functions.monta_sql_insert_tabela_unica(args, 'planos_saude')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -52,11 +52,11 @@ class Cargo(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cargo', type=int, required=True, help="Campo 'cod_cargo' é obrigatório.")
+        parser.add_argument('cod_plano_saude', type=int, required=True, help="Campo 'cod_plano_saude' é obrigatório.")
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'cargos')
+        response = functions.monta_sql_update_tabela_unica(args, 'planos_saude')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -69,10 +69,10 @@ class Cargo(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cargo', type=int, required=True, help="Campo 'cod_cargo' é obrigatório.")
+        parser.add_argument('cod_plano_saude', type=int, required=True, help="Campo 'cod_plano_saude' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'cargos')
+        response = functions.monta_sql_delete_tabela_unica(args, 'planos_saude')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
