@@ -8,10 +8,6 @@ db_user = os.environ.get('DBUSER')
 db_password = os.environ.get('DBPASSWORD')
 db_database = os.environ.get('DBDATABASE')
 
-print("//")
-print(db_database)
-print("//")
-
 #Motivo: Verificar se a resposta da requisição falhou ou não
 #Paramns: args(obj, obrigatorio)
 #Return: status, msg, erro(obj)
@@ -50,7 +46,6 @@ def monta_sql_select_tabela_unica(args, tabela):
 
             sql = sql[:-5]
 
-        print(sql)
         cursor = conexao.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
@@ -192,10 +187,6 @@ def monta_sql_delete_tabela_unica(args, tabela):
             database=db_database
         )
 
-        print("/")
-        print(args)
-        print("/")
-
         #Adicionando no sql o cod da tabela correspondente
         data = []
         for chave, valor in args.items():        
@@ -203,8 +194,6 @@ def monta_sql_delete_tabela_unica(args, tabela):
             data.append(chave)
             data.append(valor)
             break
-
-        print(sql)
 
         cursor = conexao.cursor()
         cursor.execute(sql)
