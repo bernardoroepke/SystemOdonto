@@ -8,6 +8,10 @@ db_user = os.environ.get('DBUSER')
 db_password = os.environ.get('DBPASSWORD')
 db_database = os.environ.get('DBDATABASE')
 
+print("//")
+print(db_database)
+print("//")
+
 #Motivo: Verificar se a resposta da requisição falhou ou não
 #Paramns: args(obj, obrigatorio)
 #Return: status, msg, erro(obj)
