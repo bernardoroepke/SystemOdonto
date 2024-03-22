@@ -330,7 +330,7 @@ def executa_sql_select(sql):
         data = cursor.fetchall()
         cursor.close()
         conexao.close()
-        
+
         return {
             'status': 1,
             'data': data

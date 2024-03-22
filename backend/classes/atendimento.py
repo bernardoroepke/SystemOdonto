@@ -232,7 +232,14 @@ class AtendimentoCompleto(Resource):
                 'situacao': item[4],
                 'data_inicio': item[5],
                 'data_fim': item[6],
-                'observacao': item[7]
+                'observacao': item[7],
+                'created_at': item[8],
+                'updated_at': item[9],
+                'nome_cliente': item[10],
+                'nome_funcionario': item[11],
+                'descricao_procedimento': item[12],
+                'preco_procedimento': item[13],
+                'descricao_situacao': item[14]
             })
 
         return {
