@@ -233,8 +233,6 @@ class AtendimentoCompleto(Resource):
                 'data_inicio': item[5],
                 'data_fim': item[6],
                 'observacao': item[7],
-                'created_at': item[8],
-                'updated_at': item[9],
                 'nome_cliente': item[10],
                 'nome_funcionario': item[11]
             })
