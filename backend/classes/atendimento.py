@@ -1,5 +1,13 @@
 from flask_restful import Resource, reqparse
 import backend.functions as functions
+import mysql.connector
+import os
+
+#Dados de conexão com banco de dados
+db_host = os.environ.get('DBHOST')
+db_user = os.environ.get('DBUSER')
+db_password = os.environ.get('DBPASSWORD')
+db_database = os.environ.get('DBDATABASE')
 
 class Atendimento(Resource):
 
@@ -184,3 +192,54 @@ class AtendimentoSituacao(Resource):
 
         return response, 201
     
+
+class AtendimentoCompleto(Resource):
+
+    #Tratativa de requisição GET
+    def get(self):
+
+        #Adicionando possíveis argumentos para a requisição
+        parser = reqparse.RequestParser()
+        parser.add_argument('cod_atendimento', type=int, required=False)
+        args = parser.parse_args()
+
+        sql = f'''SELECT a.*, c.nome as nome_cliente,\
+            f.nome as nome_funcionario,\
+            p.descricao as descricao_procedimento,\
+            p.preco as preco_procedimento,\
+            s.descricao as descricao_situacao
+            FROM atendimentos a
+            INNER JOIN clientes c ON a.cod_cliente = c.cod_cliente
+            INNER JOIN funcionarios f ON a.cod_funcionario = f.cod_funcionario
+            INNER JOIN procedimentos p ON a.cod_procedimento = p.cod_procedimento
+            INNER JOIN atendimentos_situacoes s ON a.cod_situacao = s.cod_situacao
+            WHERE a.cod_atendimento = {args['cod_atendimento']};'''
+        
+        response = functions.executa_sql_menos_select(sql)
+        falha = functions.verifica_falha_requisicao(response)
+
+        if falha is not None:
+            return falha, 500
+        
+        return {
+            'deu boa': 'deu boa'
+        }, 200
+
+        #Organizando os dados que serão retornados
+        data = []
+        for item in response['data']:
+            data.append({
+                'cod_atendimento': item[0],
+                'cliente': item[1],
+                'funcionario': item[2],
+                'procedimento': item[3],
+                'situacao': item[4],
+                'data_inicio': item[5],
+                'data_fim': item[6],
+                'observacao': item[7]
+            })
+
+        return {
+            'status': response['status'],
+            'data': data
+        }, 200

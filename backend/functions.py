@@ -313,3 +313,49 @@ def gerar_login(args):
             'msg': 'Falha ao gerar login',
             'erro': err.msg
         }
+
+def executa_sql_select():
+    try:
+
+        #Conexão com o banco            
+        conexao = mysql.connector.connect(
+            host=db_host,
+            user=db_user,
+            password=db_password,
+            database=db_database
+        )
+
+        cursor = conexao.cursor()
+
+    except mysql.connector.Error as err:
+        conexao.rollback()
+        cursor.close()
+        conexao.close()
+
+def executa_sql_menos_select(sql):
+    try:
+
+        #Conexão com o banco            
+        conexao = mysql.connector.connect(
+            host=db_host,
+            user=db_user,
+            password=db_password,
+            database=db_database
+        )
+
+        cursor = conexao.cursor()
+        cursor.execute(sql)
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+    except mysql.connector.Error as err:
+        conexao.rollback()
+        cursor.close()
+        conexao.close()
+
+        return {
+            'status': 0,
+            'msg': f'Falha ao executar sql',
+            'erro': err.msg
+        }
