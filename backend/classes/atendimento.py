@@ -13,6 +13,8 @@ class Atendimento(Resource):
         parser.add_argument('cod_funcionario', type=int, required=False)
         parser.add_argument('cod_procedimento', type=int, required=False)
         parser.add_argument('cod_situacao', type=int, required=False)
+        parser.add_argument('data_inicio', type=str, required=False)
+        parser.add_argument('data_fim', type=str, required=False)
         parser.add_argument('observacao', type=str, required=False)
         args = parser.parse_args()
 
@@ -31,7 +33,9 @@ class Atendimento(Resource):
                 'cod_funcionario': item[2],
                 'cod_procedimento': item[3],
                 'cod_situacao': item[4],
-                'observacao': item[5]
+                'cod_situacao': item[5],
+                'cod_situacao': item[6],
+                'observacao': item[7]
             })
 
         return {
@@ -48,6 +52,8 @@ class Atendimento(Resource):
         parser.add_argument('cod_funcionario', type=int, required=True, help="Campo 'cod_funcionario' é obrigatório.")
         parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
+        parser.add_argument('data_inicio', type=str, required=True, help="Campo 'data_inicio' é obrigatório.")
+        parser.add_argument('data_fim', type=str, required=True, help="Campo 'data_fim' é obrigatório.")
         parser.add_argument('observacao', type=str, required=False)
         args = parser.parse_args()
         
@@ -69,6 +75,8 @@ class Atendimento(Resource):
         parser.add_argument('cod_funcionario', type=int, required=False)
         parser.add_argument('cod_procedimento', type=int, required=False)
         parser.add_argument('cod_situacao', type=int, required=False)
+        parser.add_argument('data_inicio', type=str, required=False)
+        parser.add_argument('data_fim', type=str, required=False)
         parser.add_argument('observacao', type=str, required=False)
         args = parser.parse_args()
 
