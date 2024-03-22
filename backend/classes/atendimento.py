@@ -33,8 +33,8 @@ class Atendimento(Resource):
                 'cod_funcionario': item[2],
                 'cod_procedimento': item[3],
                 'cod_situacao': item[4],
-                'cod_situacao': item[5],
-                'cod_situacao': item[6],
+                'data_inicio': item[5],
+                'data_fim': item[6],
                 'observacao': item[7]
             })
 
