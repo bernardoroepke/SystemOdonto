@@ -200,7 +200,7 @@ class AtendimentoCompleto(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('cod_atendimento', type=int, required=True, help="Campo cod_atendimento é obrigatório.")
         args = parser.parse_args()
 
         sql = f'''SELECT a.*, c.nome as nome_cliente,\
