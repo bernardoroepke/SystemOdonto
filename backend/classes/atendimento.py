@@ -215,16 +215,12 @@ class AtendimentoCompleto(Resource):
             INNER JOIN atendimentos_situacoes s ON a.cod_situacao = s.cod_situacao
             WHERE a.cod_atendimento = {args['cod_atendimento']};'''
         
-        response = functions.executa_sql_menos_select(sql)
+        response = functions.executa_sql_select(sql)
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
             return falha, 500
         
-        return {
-            'deu boa': 'deu boa'
-        }, 200
-
         #Organizando os dados que serão retornados
         data = []
         for item in response['data']:

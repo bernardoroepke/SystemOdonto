@@ -314,7 +314,7 @@ def gerar_login(args):
             'erro': err.msg
         }
 
-def executa_sql_select():
+def executa_sql_select(sql):
     try:
 
         #Conexão com o banco            
@@ -326,11 +326,26 @@ def executa_sql_select():
         )
 
         cursor = conexao.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+        
+        return {
+            'status': 1,
+            'data': data
+        }
 
     except mysql.connector.Error as err:
         conexao.rollback()
         cursor.close()
         conexao.close()
+
+        return {
+            'status': 0,
+            'msg': f'Falha ao executar sql',
+            'erro': err.msg
+        }
 
 def executa_sql_menos_select(sql):
     try:
