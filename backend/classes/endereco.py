@@ -18,7 +18,7 @@ class Endereco(Resource):
         parser.add_argument('uf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'enderecos')
+        response = functions.sql_select_tabela_unica(args, 'enderecos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -57,7 +57,7 @@ class Endereco(Resource):
         parser.add_argument('uf', type=str, required=True, help="Campo 'uf' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'enderecos')
+        response = functions.sql_insert_tabela_unica(args, 'enderecos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -80,7 +80,7 @@ class Endereco(Resource):
         parser.add_argument('uf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'enderecos')
+        response = functions.sql_update_tabela_unica(args, 'enderecos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -96,7 +96,7 @@ class Endereco(Resource):
         parser.add_argument('cod_endereco', type=int, required=True, help="Campo 'cod_endereco' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'enderecos')
+        response = functions.sql_delete_tabela_unica(args, 'enderecos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

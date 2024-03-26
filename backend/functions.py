@@ -22,8 +22,8 @@ def verifica_falha_requisicao(args):
 
 #Motivo: Montar o sql dinamicamente para retornar registro
 #Paramns: args(obj, obrigatório) | tabela(string, obrigatório)
-#Return: sql(string)
-def monta_sql_select_tabela_unica(args, tabela):
+#Return: status e data ou erro(obj)
+def sql_select_tabela_unica(args, tabela):
     try:
         #Conexão com o banco            
         conexao = mysql.connector.connect(
@@ -70,8 +70,8 @@ def monta_sql_select_tabela_unica(args, tabela):
 
 #Motivo: Montar o sql dinamicamente para cadastrar registro
 #Paramns: args(obj, obrigatório) | tabela(string, obrigatório)
-#Return: sql(string)
-def monta_sql_insert_tabela_unica(args, tabela):
+#Return: status, data ou erro(obj)
+def sql_insert_tabela_unica(args, tabela):
     try:
         #Conexão com o banco            
         conexao = mysql.connector.connect(
@@ -123,8 +123,8 @@ def monta_sql_insert_tabela_unica(args, tabela):
 
 #Motivo: Montar o sql dinamicamente para atualizar registro
 #Paramns: args(obj, obrigatório) | tabela(string, obrigatório) | cod(string, obrigatório)
-#Return: sql(string)
-def monta_sql_update_tabela_unica(args, tabela):
+#Return: status, data ou erro(obj)
+def sql_update_tabela_unica(args, tabela):
     try:
         #Conexão com o banco            
         conexao = mysql.connector.connect(
@@ -176,8 +176,8 @@ def monta_sql_update_tabela_unica(args, tabela):
 
 #Motivo: Montar o sql dinamicamente para deletar registro
 #Paramns: args(obj, obrigatório) | tabela(string, obrigatório) | cod(string, obrigatório)
-#Return: sql(string)
-def monta_sql_delete_tabela_unica(args, tabela):
+#Return: status, data ou erro(obj)
+def sql_delete_tabela_unica(args, tabela):
     try:
         #Conexão com o banco            
         conexao = mysql.connector.connect(
@@ -217,7 +217,7 @@ def monta_sql_delete_tabela_unica(args, tabela):
             'erro': err.msg
         }
         
-def monta_sql_delete_tabela_unica_2_parametros(args, tabela):
+def sql_delete_tabela_unica_2_parametros(args, tabela):
     try:
         #Conexão com o banco            
         conexao = mysql.connector.connect(
@@ -314,7 +314,10 @@ def gerar_login(args):
             'erro': err.msg
         }
 
-def executa_sql_select(sql):
+#Motivo: Executa sql select bruto
+#Paramns: sql(string)
+#Return: status, data ou erro(obj)
+def sql_select(sql):
     try:
 
         #Conexão com o banco            
@@ -347,7 +350,10 @@ def executa_sql_select(sql):
             'erro': err.msg
         }
 
-def executa_sql_menos_select(sql):
+#Motivo: Executa qualquer sql bruto que não seja select
+#Paramns: sql(string)
+#Return: status, data ou erro(obj)
+def sql_menos_select(sql):
     try:
 
         #Conexão com o banco            

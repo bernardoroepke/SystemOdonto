@@ -12,7 +12,7 @@ class Agenda(Resource):
         parser.add_argument('cod_atendimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'agendas')
+        response = functions.sql_select_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -39,7 +39,7 @@ class Agenda(Resource):
         parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'agendas')
+        response = functions.sql_insert_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -56,7 +56,7 @@ class Agenda(Resource):
         parser.add_argument('cod_atendimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'agendas')
+        response = functions.sql_update_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -72,7 +72,7 @@ class Agenda(Resource):
         parser.add_argument('cod_agenda', type=int, required=True, help="Campo 'cod_agenda' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'agendas')
+        response = functions.sql_delete_tabela_unica(args, 'agendas')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

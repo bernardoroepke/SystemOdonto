@@ -15,7 +15,7 @@ class Material(Resource):
         parser.add_argument('validade', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'materiais')
+        response = functions.sql_select_tabela_unica(args, 'materiais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -49,7 +49,7 @@ class Material(Resource):
         parser.add_argument('validade', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'materiais')
+        response = functions.sql_insert_tabela_unica(args, 'materiais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -69,7 +69,7 @@ class Material(Resource):
         parser.add_argument('validade', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'materiais')
+        response = functions.sql_update_tabela_unica(args, 'materiais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -85,7 +85,7 @@ class Material(Resource):
         parser.add_argument('cod_material', type=int, required=True, help="Campo 'cod_material' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'materiais')
+        response = functions.sql_delete_tabela_unica(args, 'materiais')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

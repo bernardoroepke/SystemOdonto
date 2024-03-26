@@ -12,7 +12,7 @@ class Cargo(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'cargos')
+        response = functions.sql_select_tabela_unica(args, 'cargos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -39,7 +39,7 @@ class Cargo(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'cargos')
+        response = functions.sql_insert_tabela_unica(args, 'cargos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -56,7 +56,7 @@ class Cargo(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'cargos')
+        response = functions.sql_update_tabela_unica(args, 'cargos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -72,7 +72,7 @@ class Cargo(Resource):
         parser.add_argument('cod_cargo', type=int, required=True, help="Campo 'cod_cargo' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'cargos')
+        response = functions.sql_delete_tabela_unica(args, 'cargos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

@@ -20,7 +20,7 @@ class Funcionario(Resource):
         parser.add_argument('cro', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'funcionarios')
+        response = functions.sql_select_tabela_unica(args, 'funcionarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -71,7 +71,7 @@ class Funcionario(Resource):
         #Adicionando cod_usuario dentro de argumentos para cadastrar funcionario
         args['cod_usuario'] = login['cod_usuario']
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'funcionarios')
+        response = functions.sql_insert_tabela_unica(args, 'funcionarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -95,7 +95,7 @@ class Funcionario(Resource):
         parser.add_argument('cro', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'funcionarios')
+        response = functions.sql_update_tabela_unica(args, 'funcionarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -111,7 +111,7 @@ class Funcionario(Resource):
         parser.add_argument('cod_funcionario', type=int, required=True, help="Campo 'cod_funcionario' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'funcionarios')
+        response = functions.sql_delete_tabela_unica(args, 'funcionarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -131,7 +131,7 @@ class FuncionarioSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_select_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -158,7 +158,7 @@ class FuncionarioSituacao(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_insert_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -175,7 +175,7 @@ class FuncionarioSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_update_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -191,7 +191,7 @@ class FuncionarioSituacao(Resource):
         parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_delete_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -211,7 +211,7 @@ class FuncionarioProcedimento(Resource):
         parser.add_argument('cod_procedimento', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_select_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -239,7 +239,7 @@ class FuncionarioProcedimento(Resource):
         parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'funcionarios_procedimentos')
+        response = functions.sql_insert_tabela_unica(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -263,7 +263,7 @@ class FuncionarioProcedimento(Resource):
         parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica_2_parametros(args, 'funcionarios_procedimentos')
+        response = functions.sql_delete_tabela_unica_2_parametros(args, 'funcionarios_procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

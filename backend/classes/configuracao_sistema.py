@@ -13,7 +13,7 @@ class ConfiguracaoSistema(Resource):
         parser.add_argument('valor', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'configuracoes_sistema')
+        response = functions.sql_select_tabela_unica(args, 'configuracoes_sistema')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -42,7 +42,7 @@ class ConfiguracaoSistema(Resource):
         parser.add_argument('valor', type=str, required=True, help="Campo 'valor' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'configuracoes_sistema')
+        response = functions.sql_insert_tabela_unica(args, 'configuracoes_sistema')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -60,7 +60,7 @@ class ConfiguracaoSistema(Resource):
         parser.add_argument('valor', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'configuracoes_sistema')
+        response = functions.sql_update_tabela_unica(args, 'configuracoes_sistema')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -76,7 +76,7 @@ class ConfiguracaoSistema(Resource):
         parser.add_argument('cod_configuracao_sistema', type=int, required=True, help="Campo 'cod_configuracao_sistema' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'configuracoes_sistema')
+        response = functions.sql_delete_tabela_unica(args, 'configuracoes_sistema')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

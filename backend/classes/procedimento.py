@@ -13,7 +13,7 @@ class Procedimento(Resource):
         parser.add_argument('preco', type=float, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'procedimentos')
+        response = functions.sql_select_tabela_unica(args, 'procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -42,7 +42,7 @@ class Procedimento(Resource):
         parser.add_argument('preco', type=float, required=True, help="Campo 'preco' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'procedimentos')
+        response = functions.sql_insert_tabela_unica(args, 'procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -60,7 +60,7 @@ class Procedimento(Resource):
         parser.add_argument('preco', type=float, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'procedimentos')
+        response = functions.sql_update_tabela_unica(args, 'procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -76,7 +76,7 @@ class Procedimento(Resource):
         parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'procedimentos')
+        response = functions.sql_delete_tabela_unica(args, 'procedimentos')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:

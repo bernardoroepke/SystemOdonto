@@ -13,7 +13,7 @@ class Usuario(Resource):
         parser.add_argument('senha', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'usuarios')
+        response = functions.sql_select_tabela_unica(args, 'usuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -50,7 +50,7 @@ class Usuario(Resource):
         parser.add_argument('senha', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'usuarios')
+        response = functions.sql_update_tabela_unica(args, 'usuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -66,7 +66,7 @@ class Usuario(Resource):
         parser.add_argument('cod_usuario', type=int, required=True, help="Campo 'cod_usuario' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'usuarios')
+        response = functions.sql_delete_tabela_unica(args, 'usuarios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -87,7 +87,7 @@ class Telefone(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'emails')
+        response = functions.sql_select_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -116,7 +116,7 @@ class Telefone(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'emails')
+        response = functions.sql_insert_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -132,7 +132,7 @@ class Telefone(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'emails')
+        response = functions.sql_update_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -148,7 +148,7 @@ class Telefone(Resource):
         parser.add_argument('cod_email', type=int, required=True, help="Campo 'cod_email' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'emails')
+        response = functions.sql_delete_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -169,7 +169,7 @@ class Email(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'emails')
+        response = functions.sql_select_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -198,7 +198,7 @@ class Email(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'emails')
+        response = functions.sql_insert_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -214,7 +214,7 @@ class Email(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_update_tabela_unica(args, 'emails')
+        response = functions.sql_update_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -230,7 +230,7 @@ class Email(Resource):
         parser.add_argument('cod_email', type=int, required=True, help="Campo 'cod_email' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica(args, 'emails')
+        response = functions.sql_delete_tabela_unica(args, 'emails')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -250,7 +250,7 @@ class UsuarioPrivilegio(Resource):
         parser.add_argument('cod_privilegio', type=int, required=False)
         args = parser.parse_args()
 
-        response = functions.monta_sql_select_tabela_unica(args, 'usuarios_privilegios')
+        response = functions.sql_select_tabela_unica(args, 'usuarios_privilegios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -278,7 +278,7 @@ class UsuarioPrivilegio(Resource):
         parser.add_argument('cod_privilegio', type=int, required=True, help="Campo 'cod_privilegio' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_insert_tabela_unica(args, 'usuarios_privilegios')
+        response = functions.sql_insert_tabela_unica(args, 'usuarios_privilegios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -302,7 +302,7 @@ class UsuarioPrivilegio(Resource):
         parser.add_argument('cod_privilegio', type=int, required=True, help="Campo 'cod_privilegio' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.monta_sql_delete_tabela_unica_2_parametros(args, 'usuarios_privilegios')
+        response = functions.sql_delete_tabela_unica_2_parametros(args, 'usuarios_privilegios')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
