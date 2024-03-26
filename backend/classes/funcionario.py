@@ -53,7 +53,7 @@ class Funcionario(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('cod_usuario', type=int, required=False)
         parser.add_argument('cod_cargo', type=int, required=True, help="Campo 'cod_cargo' é obrigatório.")
-        parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
+        parser.add_argument('cod_situacao', type=int, required=False)
         parser.add_argument('cod_especialidade', type=int, required=False)
         parser.add_argument('nome', type=str, required=True, help="Campo 'nome' é obrigatório.")
         parser.add_argument('data_nascimento', type=str, required=True, help="Campo 'data_nascimento' é obrigatório.")
