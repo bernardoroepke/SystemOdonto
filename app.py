@@ -59,4 +59,4 @@ api.add_resource(OrdemServicoSituacao, '/ordemservico/situacao')
 api.add_resource(ConfiguracaoSistema, '/configuracaosistema')
 
 if  __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
