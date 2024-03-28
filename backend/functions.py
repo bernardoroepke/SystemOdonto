@@ -171,7 +171,8 @@ def sql_update_tabela_unica(args, tabela):
         return {
             'status': 0,
             'msg': f'Falha ao editar {tabela}',
-            'erro': err.msg
+            'erro': err.msg,
+            'código do erro': err.errno
         }
 
 #Motivo: Montar o sql dinamicamente para deletar registro
