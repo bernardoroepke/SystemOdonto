@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
 from backend.classes.usuario import *
 from backend.classes.privilegio import *
-from backend.classes.cliente import *
+from backend.classes.paciente import *
 from backend.classes.funcionario import *
 from backend.classes.endereco import *
 from backend.classes.fornecedor import *
@@ -28,10 +28,10 @@ CORS(app)
 api.add_resource(Usuario, '/usuario')
 api.add_resource(UsuarioPrivilegio, '/usuario/privilegio')
 api.add_resource(Privilegio, '/privilegio')
-api.add_resource(Cliente, '/cliente')
-api.add_resource(ClienteSituacao, '/cliente/situacao')
-api.add_resource(ClienteCompleto, '/cliente/completo')
-api.add_resource(ClienteProcedimento, '/cliente/procedimento')
+api.add_resource(Paciente, '/paciente')
+api.add_resource(PacienteSituacao, '/paciente/situacao')
+api.add_resource(PacienteCompleto, '/paciente/completo')
+api.add_resource(PacienteProcedimento, '/paciente/procedimento')
 api.add_resource(Funcionario, '/funcionario')
 api.add_resource(FuncionarioSituacao, '/funcionario/situacao')
 api.add_resource(FuncionarioProcedimento, '/funcionario/procedimento')
@@ -59,4 +59,4 @@ api.add_resource(OrdemServicoSituacao, '/ordemservico/situacao')
 api.add_resource(ConfiguracaoSistema, '/configuracaosistema')
 
 if  __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

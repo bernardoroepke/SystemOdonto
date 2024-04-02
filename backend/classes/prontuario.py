@@ -9,7 +9,7 @@ class Prontuario(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_prontuario', type=int, required=False)
-        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_atendimento', type=int, required=False)
         parser.add_argument('anamnese', type=str, required=False)
         parser.add_argument('plano_terapeutico', type=str, required=False)
@@ -26,7 +26,7 @@ class Prontuario(Resource):
         for item in response['data']:
             data.append({
                 'cod_prontuario': item[0],
-                'cod_cliente': item[1],
+                'cod_paciente': item[1],
                 'cod_atendimento': item[2],
                 'anamnese': item[3],
                 'plano_terapeutico': item[4],
@@ -42,7 +42,7 @@ class Prontuario(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo 'cod_paciente' é obrigatório.")
         parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
         parser.add_argument('anamnese', type=str, required=False)
         parser.add_argument('plano_terapeutico', type=str, required=False)
@@ -62,7 +62,7 @@ class Prontuario(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_prontuario', type=int, required=True, help="Campo 'cod_prontuario' é obrigatório.")
-        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_atendimento', type=int, required=False)
         parser.add_argument('anamnese', type=str, required=False)
         parser.add_argument('plano_terapeutico', type=str, required=False)

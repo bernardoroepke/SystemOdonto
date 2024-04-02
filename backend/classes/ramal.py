@@ -9,7 +9,7 @@ class Ramal(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_ramal', type=int, required=False)
-        parser.add_argument('cod_atendimento', type=int, required=False)
+        parser.add_argument('cod_funcionario', type=int, required=False)
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 

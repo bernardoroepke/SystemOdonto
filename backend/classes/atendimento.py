@@ -17,7 +17,7 @@ class Atendimento(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_atendimento', type=int, required=False)
-        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_funcionario', type=int, required=False)
         parser.add_argument('cod_procedimento', type=int, required=False)
         parser.add_argument('cod_situacao', type=int, required=False)
@@ -37,7 +37,7 @@ class Atendimento(Resource):
         for item in response['data']:
             data.append({
                 'cod_atendimento': item[0],
-                'cod_cliente': item[1],
+                'cod_paciente': item[1],
                 'cod_funcionario': item[2],
                 'cod_procedimento': item[3],
                 'cod_situacao': item[4],
@@ -56,7 +56,7 @@ class Atendimento(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo 'cod_paciente' é obrigatório.")
         parser.add_argument('cod_funcionario', type=int, required=True, help="Campo 'cod_funcionario' é obrigatório.")
         parser.add_argument('cod_procedimento', type=int, required=True, help="Campo 'cod_procedimento' é obrigatório.")
         parser.add_argument('cod_situacao', type=int, required=False)
@@ -79,7 +79,7 @@ class Atendimento(Resource):
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
         parser.add_argument('cod_atendimento', type=int, required=True, help="Campo 'cod_atendimento' é obrigatório.")
-        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_funcionario', type=int, required=False)
         parser.add_argument('cod_procedimento', type=int, required=False)
         parser.add_argument('cod_situacao', type=int, required=False)
@@ -203,13 +203,13 @@ class AtendimentoCompleto(Resource):
         parser.add_argument('cod_atendimento', type=int, required=True, help="Campo cod_atendimento é obrigatório.")
         args = parser.parse_args()
 
-        sql = f'''SELECT a.*, c.nome as nome_cliente,\
+        sql = f'''SELECT a.*, c.nome as nome_paciente,\
                 f.nome as nome_funcionario,\
                 p.descricao as descricao_procedimento,\
                 p.preco as preco_procedimento,\
                 s.descricao as descricao_situacao
                 FROM atendimentos a
-                INNER JOIN clientes c ON a.cod_cliente = c.cod_cliente
+                INNER JOIN pacientes c ON a.cod_paciente = c.cod_paciente
                 INNER JOIN funcionarios f ON a.cod_funcionario = f.cod_funcionario
                 INNER JOIN procedimentos p ON a.cod_procedimento = p.cod_procedimento
                 INNER JOIN atendimentos_situacoes s ON a.cod_situacao = s.cod_situacao
@@ -226,14 +226,14 @@ class AtendimentoCompleto(Resource):
         for item in response['data']:
             data.append({
                 'cod_atendimento': item[0],
-                'cod_cliente': item[1],
+                'cod_paciente': item[1],
                 'cod_funcionario': item[2],
                 'cod_procedimento': item[3],
                 'cod_situacao': item[4],
                 'data_inicio': item[5],
                 'data_fim': item[6],
                 'observacao': item[7],
-                'nome_cliente': item[10],
+                'nome_paciente': item[10],
                 'nome_funcionario': item[11],
                 'descricao_procedimento': item[12],
                 'preco_procedimento': item[13],

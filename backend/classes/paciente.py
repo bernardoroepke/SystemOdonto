@@ -1,14 +1,14 @@
 from flask_restful import Resource, reqparse
 import backend.functions as functions
 
-class Cliente(Resource):
+class Paciente(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=False)
+        parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_usuario', type=int, required=False)
         parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
@@ -16,7 +16,7 @@ class Cliente(Resource):
         parser.add_argument('cpf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.sql_select_tabela_unica(args, 'clientes')
+        response = functions.sql_select_tabela_unica(args, 'pacientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -26,7 +26,7 @@ class Cliente(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_cliente': item[0],
+                'cod_paciente': item[0],
                 'cod_usuario': item[1],
                 'cod_plano_saude': item[2],
                 'nome': item[3],
@@ -57,10 +57,10 @@ class Cliente(Resource):
         if falha is not None:
             return falha, 500
         
-        #Adicionando cod_usuario dentro de argumentos para cadastrar cliente
+        #Adicionando cod_usuario dentro de argumentos para cadastrar paciente
         args['cod_usuario'] = login['cod_usuario']
 
-        response = functions.sql_insert_tabela_unica(args, 'clientes')
+        response = functions.sql_insert_tabela_unica(args, 'pacientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -73,14 +73,14 @@ class Cliente(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo 'cod_paciente' é obrigatório.")
         parser.add_argument('cod_plano_saude', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
         parser.add_argument('data_nascimento', type=str, required=False)
         parser.add_argument('cpf', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.sql_update_tabela_unica(args, 'clientes')
+        response = functions.sql_update_tabela_unica(args, 'pacientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -93,10 +93,10 @@ class Cliente(Resource):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo 'cod_cliente' é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo 'cod_paciente' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.sql_delete_tabela_unica(args, 'clientes')
+        response = functions.sql_delete_tabela_unica(args, 'pacientes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -105,7 +105,7 @@ class Cliente(Resource):
         return response, 201
     
 
-class ClienteSituacao(Resource):
+class PacienteSituacao(Resource):
 
     #Tratativa de requisição GET
     def get(self):
@@ -116,7 +116,7 @@ class ClienteSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.sql_select_tabela_unica(args, 'clientes_situacoes')
+        response = functions.sql_select_tabela_unica(args, 'pacientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -143,7 +143,7 @@ class ClienteSituacao(Resource):
         parser.add_argument('descricao', type=str, required=True, help="Campo 'descricao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.sql_insert_tabela_unica(args, 'clientes_situacoes')
+        response = functions.sql_insert_tabela_unica(args, 'pacientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -160,7 +160,7 @@ class ClienteSituacao(Resource):
         parser.add_argument('descricao', type=str, required=False)
         args = parser.parse_args()
 
-        response = functions.sql_update_tabela_unica(args, 'clientes_situacoes')
+        response = functions.sql_update_tabela_unica(args, 'pacientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -176,7 +176,7 @@ class ClienteSituacao(Resource):
         parser.add_argument('cod_situacao', type=int, required=True, help="Campo 'cod_situacao' é obrigatório.")
         args = parser.parse_args()
 
-        response = functions.sql_delete_tabela_unica(args, 'clientes_situacoes')
+        response = functions.sql_delete_tabela_unica(args, 'pacientes_situacoes')
         falha = functions.verifica_falha_requisicao(response)
 
         if falha is not None:
@@ -185,22 +185,22 @@ class ClienteSituacao(Resource):
         return response, 201
 
 
-class ClienteCompleto(Resource):
+class PacienteCompleto(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo cod_cliente é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo cod_paciente é obrigatório.")
         args = parser.parse_args()
 
         sql = f'''SELECT a.*, p.descricao as descricao_plano_saude,\
                 s.descricao as descricao_situacao
-                FROM clientes a
+                FROM pacientes a
                 INNER JOIN planos_saude p ON a.cod_plano_saude = p.cod_plano_saude
-                INNER JOIN clientes_situacoes s ON a.cod_situacao = s.cod_situacao
-                WHERE a.cod_cliente = {args['cod_cliente']};'''
+                INNER JOIN pacientes_situacoes s ON a.cod_situacao = s.cod_situacao
+                WHERE a.cod_paciente = {args['cod_paciente']};'''
         
         response = functions.sql_select(sql)
         falha = functions.verifica_falha_requisicao(response)
@@ -212,7 +212,7 @@ class ClienteCompleto(Resource):
         data = []
         for item in response['data']:
             data.append({
-                'cod_cliente': item[0],
+                'cod_paciente': item[0],
                 'cod_usuario': item[1],
                 'cod_plano_saude': item[2],
                 'cod_situacao': item[3],
@@ -220,7 +220,7 @@ class ClienteCompleto(Resource):
                 'data_nascimento': item[5],
                 'cpf': item[6],
                 'descricao_plano_saude': item[7],
-                'situacao_cliente': item[8]
+                'situacao_paciente': item[8]
             })
 
         return {
@@ -229,14 +229,14 @@ class ClienteCompleto(Resource):
         }, 200
 
 
-class ClienteProcedimento(Resource):
+class PacienteProcedimento(Resource):
 
     #Tratativa de requisição GET
     def get(self):
 
         #Adicionando possíveis argumentos para a requisição
         parser = reqparse.RequestParser()
-        parser.add_argument('cod_cliente', type=int, required=True, help="Campo cod_cliente é obrigatório.")
+        parser.add_argument('cod_paciente', type=int, required=True, help="Campo cod_paciente é obrigatório.")
         args = parser.parse_args()
 
         sql = f'''SELECT a.cod_atendimento as cod_atendimento,
@@ -251,7 +251,7 @@ class ClienteProcedimento(Resource):
                 INNER JOIN procedimentos p ON a.cod_procedimento = p.cod_procedimento
                 INNER JOIN funcionarios f ON a.cod_funcionario = f.cod_funcionario
                 INNER JOIN atendimentos_situacoes s ON a.cod_situacao = s.cod_situacao
-                WHERE a.cod_cliente = {args['cod_cliente']};'''
+                WHERE a.cod_paciente = {args['cod_paciente']};'''
             
         response = functions.sql_select(sql)
         falha = functions.verifica_falha_requisicao(response)
