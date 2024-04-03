@@ -1,12 +1,59 @@
 from datetime import datetime
 import mysql.connector
 import os
+import re
 
 #Dados de conexão com banco de dados
 db_host = os.environ.get('DBHOST')
 db_user = os.environ.get('DBUSER')
 db_password = os.environ.get('DBPASSWORD')
 db_database = os.environ.get('DBDATABASE')
+
+
+#Motivo: Verificar se o campo data_nascimento está chegando como estipulado "dd-mm-YYYY"
+#Paramns: data_nascimento(string, obrigatório)
+#Return: status, msg, erro(obj)
+def valida_data_nascimento(data_nascimento):
+    regex = r"^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(\d{4})$"
+    data_validada = re.match(regex, data_nascimento)
+
+    if(data_validada is None):
+        return {
+            'status': 0,
+            'msg': 'Falha na data de nascimento',
+            'erro': 'Formato de data de nascimento inesperado.'
+        }
+    else:
+        return {
+            'status': 1,
+            'data_nascimento': data_nascimento
+        }
+    
+#Motivo: Verificar se o campo cpf está chegando como estipulado "000.000.000-00"
+#Paramns: cpf(string, obrigatório)
+#Return: status, msg, erro(obj)
+def valida_cpf(cpf):
+    regex = r"^\d{3}\.\d{3}\.\d{3}-\d{2}$"
+    cpf_validado = re.match(regex, cpf)
+
+    if(cpf_validado is None):
+        return {
+            'status': 0,
+            'msg': 'Falha no cpf',
+            'erro': 'Formato de cpf inesperado.'
+        }
+    else:
+        return {
+            'status': 1,
+            'cpf': cpf
+        }
+    
+#Motivo: Converter data de nascimento de "dd-mm-YYYY" para "YYYY-mm-dd"
+#Paramns: data_nascimento(string, obrigatório)
+#Return: data_nascimento(string)
+def converte_data_nascimento(data_nascimento):
+    dia, mes, ano = data_nascimento.split("-")
+    return f"{ano}-{mes}-{dia}"
 
 #Motivo: Verificar se a resposta da requisição falhou ou não
 #Paramns: args(obj, obrigatorio)
@@ -259,6 +306,11 @@ def sql_delete_tabela_unica_2_parametros(args, tabela):
             'msg': f'Falha ao deletar {tabela}',
             'erro': err.msg
         }
+    
+
+def remove_caracteres_especiais(string):
+    string_limpa = re.sub(r"[^0-9]", "", string)
+    return string_limpa
 
 #Motivo: Gera login e senha de usuário com base no nome, cpf e data de nascimento
 #Paramns: args(obj)
@@ -281,12 +333,12 @@ def gerar_login(args):
         
         #Tratativa para gerar login com base no nome e cpf
         primeiro_nome = args['nome'].split()[0].lower()
-        tres_ultimos_cpf = args['cpf'][-3:]
+        cpf_limpo = remove_caracteres_especiais(args['cpf'])
+        tres_ultimos_cpf = cpf_limpo[-3:]
         login = primeiro_nome + tres_ultimos_cpf
         
         #Tratativa para gerar senha com base na data de nascimento
-        data_nascimento_obj = datetime.strptime(args['data_nascimento'], "%Y-%m-%d")
-        senha = data_nascimento_obj.strftime("%d%m%Y")
+        senha = remove_caracteres_especiais(args['data_nascimento'])
 
         sql = f"INSERT INTO usuarios (login, senha) VALUES ('{login}', '{senha}')"
 

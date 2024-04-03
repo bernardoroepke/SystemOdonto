@@ -11,6 +11,7 @@ class Paciente(Resource):
         parser.add_argument('cod_paciente', type=int, required=False)
         parser.add_argument('cod_usuario', type=int, required=False)
         parser.add_argument('cod_plano_saude', type=int, required=False)
+        parser.add_argument('cod_situacao', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
         parser.add_argument('data_nascimento', type=str, required=False)
         parser.add_argument('cpf', type=str, required=False)
@@ -29,9 +30,10 @@ class Paciente(Resource):
                 'cod_paciente': item[0],
                 'cod_usuario': item[1],
                 'cod_plano_saude': item[2],
-                'nome': item[3],
-                'data_nascimento': item[4],
-                'cpf': item[5],
+                'cod_situacao': item[3],
+                'nome': item[4],
+                'data_nascimento': item[5],
+                'cpf': item[6],
             })
 
         return {
@@ -46,10 +48,23 @@ class Paciente(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('cod_usuario', type=int, required=False)
         parser.add_argument('cod_plano_saude', type=int, required=False)
+        parser.add_argument('cod_situacao', type=int, required=False)
         parser.add_argument('nome', type=str, required=True, help="Campo 'nome' é obrigatório.")
         parser.add_argument('data_nascimento', type=str, required=True, help="Campo 'data_nascimento' é obrigatório.")
         parser.add_argument('cpf', type=str, required=True, help="Campo 'cpf' é obrigatório.")
         args = parser.parse_args()
+        
+        data_nascimento = functions.valida_data_nascimento(args['data_nascimento'])
+        falha = functions.verifica_falha_requisicao(data_nascimento)
+
+        if falha is not None:
+            return falha, 500
+        
+        cpf = functions.valida_cpf(args['cpf'])
+        falha = functions.verifica_falha_requisicao(cpf)
+
+        if falha is not None:
+            return falha, 500
         
         login = functions.gerar_login(args)
         falha = functions.verifica_falha_requisicao(login)
@@ -59,6 +74,8 @@ class Paciente(Resource):
         
         #Adicionando cod_usuario dentro de argumentos para cadastrar paciente
         args['cod_usuario'] = login['cod_usuario']
+        args['cpf'] = functions.remove_caracteres_especiais(args['cpf'])
+        args['data_nascimento'] = functions.converte_data_nascimento(args['data_nascimento'])
 
         response = functions.sql_insert_tabela_unica(args, 'pacientes')
         falha = functions.verifica_falha_requisicao(response)
@@ -75,6 +92,7 @@ class Paciente(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('cod_paciente', type=int, required=True, help="Campo 'cod_paciente' é obrigatório.")
         parser.add_argument('cod_plano_saude', type=int, required=False)
+        parser.add_argument('cod_situacao', type=int, required=False)
         parser.add_argument('nome', type=str, required=False)
         parser.add_argument('data_nascimento', type=str, required=False)
         parser.add_argument('cpf', type=str, required=False)
